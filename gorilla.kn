@@ -1,0 +1,57 @@
+;::::::::::::::::::::::::::::::::::::
+;: ゴリラ言語
+;:2019 RIMO(c)
+;::::::::::::::::::::::::::::::::::::
+func main()
+	var hen: []int :: #[10000000]int
+	var handle: file@Reader :: file@makeReader("ゴリラ.txt")
+	do handle.delimiter("")
+	var src: []char :: handle.readStr().replace("\n", "")
+	do handle.fin()
+	var pt: int :: 0
+	var pp: int :: 0
+	var cmd: []char :: ""
+	while ml(pt <= ^src - 6)
+		do cmd :: src.sub(pt, 6)
+		switch(cmd)
+		case "うほっうほっ"
+			do pp :- 1
+		case "うほっうほほ"
+			do pp :- 1
+		case "うほっうっほ"
+			do hen[pp] :+ 1
+		case "うほほうほっ"
+			do hen[pp] :- 1
+		case "うほほうほほ"
+		case "うほほうっほ"
+			do cui@print(hen[pp].toStr() ~ "\n")
+		case "うっほうほっ"
+			if(hen[pp] = 0)
+				var po: int :: 1
+				while(po > 0)
+					if(src.sub(pt, 1) = "うっほうほっ")
+						do po :+ 1
+					end if
+					if(src.sub(pt, 1) = "うっほうほほ")
+						do po :- 1
+					end if
+					do pt :+ 6
+				end while
+			end if
+		case "うっほうほほ"
+			if(hen[pp] <> 0)
+				var po: int :: 1
+				while(po > 0)
+					if(src.sub(pt, 1) = "うっほうほほ")
+						do po :+ 1
+					end if
+					if(src.sub(pt, 1) = "うっほうほっ")
+						do po :- 1
+					end if
+					do pt :- 6
+				end while
+			end if
+		end switch
+		do pt :+ 6
+	end while
+end func
